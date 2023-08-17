@@ -1,3 +1,5 @@
+import 'package:f3/locator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +30,8 @@ class _InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> _init() async {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await FirebaseAuth.instance.signInAnonymously();
+      setup();
     }
 
     return FutureBuilder(
