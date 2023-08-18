@@ -21,7 +21,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   ///while sending message
   bool isSending = false;
-  List<types.TextMessage> messages = [];
+  List<types.Message> messages = [];
 
   types.TextMessage get testMessage => types.TextMessage(
         author: types.User(id: 'bot'),
@@ -33,6 +33,7 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   void initState() {
     super.initState();
+
     locator.get<ConversationRepoImpl>().getMessages().then((value) {
       value.fold((l) => logger.e(l), (r) {
         logger.d("r is ${r.length}");
@@ -77,17 +78,30 @@ class _ConversationPageState extends State<ConversationPage> {
       createdAt: textMessage.createdAt.millisecondsSinceEpoch,
       id: "temp",
       text: textMessage.text,
-      status: types.Status.sending,
+      status: types.Status.sent, //todo: change to sending
+    );
+    final botLoadingMessage = types.TextMessage(
+      author: types.User(id: 'bot'),
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: 'bot',
+      text: '...',
     );
 
     setState(() {
       messages.insert(0, sendingMessage);
+      messages.insert(0, botLoadingMessage);
     });
 
     final response = await locator.get<ConversationRepoImpl>().sendMessage(textMessage);
-    response.fold((l) => logger.e(l), (r) {
-      messages.remove(sendingMessage);
 
+    messages.remove(sendingMessage);
+    messages.remove(botLoadingMessage);
+
+    response.fold((l) {
+      logger.e(l);
+      messages.insert(0, sendingMessage.copyWith(status: types.Status.error));
+      // messages.insert(0, botLoadingMessage.copyWith(status: types.Status.error));
+    }, (r) {
       messages.insert(0, r.$1.toTypeMessage());
       messages.insert(0, r.$2.toTypeMessage());
 
