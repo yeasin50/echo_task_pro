@@ -14,14 +14,20 @@ class ChatBotPaLM {
 
   Stream<QuerySnapshot<Map>> get messages => messagePath.snapshots();
 
-  Future<bool> sendMessage(String message) async {
+  Future<Map<String, dynamic>?> sendMessage(String message) async {
     try {
       final ref = await messagePath.add({'prompt': message});
 
-      return true;
+      await for (final s in messagePath.snapshots()) {
+        logger.d("Message map event ${s.docs.length}");
+        final doc = s.docs.firstWhere((element) => element.id == ref.id);
+        var data = doc.data();
+        if (data['status']?['state'] == 'COMPLETED') {
+          return data..addAll({'id': doc.id});
+        }
+      }
     } catch (e) {
-      logger.e(e);
-      return false;
+      logger.e("sendMessage ${e.toString()}");
     }
   }
 }

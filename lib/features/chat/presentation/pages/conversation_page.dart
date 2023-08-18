@@ -1,4 +1,4 @@
-import 'package:f3/features/chat/presentation/utils/to_type_message.dart';
+import '../utils/to_type_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart' as fcui;
@@ -18,49 +18,47 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage> {
   final _user = types.User(id: locator.get<ChatBotPaLM>().userID);
-  final _ai = const types.User(id: 'bot');
 
   ///while sending message
-  types.TextMessage? loadingMessage;
+  bool isSending = false;
   List<types.TextMessage> messages = [];
 
-  late final stream = locator.get<ChatBotPaLM>().messages;
-  //locator.get<ConversationRepoImpl>().getMessage();
+  types.TextMessage get testMessage => types.TextMessage(
+        author: types.User(id: 'bot'),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: 'bot-1',
+        text: 'Hello',
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    locator.get<ConversationRepoImpl>().getMessages().then((value) {
+      value.fold((l) => logger.e(l), (r) {
+        logger.d("r is ${r.length}");
+
+        for (final element in r) {
+          messages.add(element.$2.toTypeMessage());
+          messages.add(element.$1.toTypeMessage());
+        }
+        setState(() {});
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Echo Task Pro'),
       ),
-      body: StreamBuilder(
-          stream: stream,
-          builder: (context, snapshot) {
-            logger.d("state ${snapshot.connectionState} ${snapshot.data}}");
-            if (snapshot.connectionState == ConnectionState.active) {
-              final data = snapshot.data?.docs;
-              data?.forEach((element) {
-                logger.d("state ${element.data()}");
-              });
-
-              // snapshot.data?.map((e) {
-              //   final userMessage = e.$1;
-              //   final botMessage = e.$2;
-              //   messages.add(userMessage.toChatMessage());
-              //   messages.add(botMessage.toChatMessage());
-              //   logger.d("state ${userMessage.text} ${botMessage.text}");
-              // });
-
-              // setState(() {});
-            }
-            return fcui.Chat(
-              messages: [
-                ...messages,
-                if (loadingMessage != null) loadingMessage!,
-              ],
-              onSendPressed: _handleSendPressed,
-              user: _user,
-            );
-          }),
+      body: fcui.Chat(
+        messages: [
+          ...messages,
+        ],
+        onSendPressed: _handleSendPressed,
+        user: _user,
+      ),
     );
   }
 
@@ -72,19 +70,28 @@ class _ConversationPageState extends State<ConversationPage> {
       text: message.text,
     );
 
+    late types.TextMessage sendingMessage;
+
+    sendingMessage = types.TextMessage(
+      author: _user,
+      createdAt: textMessage.createdAt.millisecondsSinceEpoch,
+      id: "temp",
+      text: textMessage.text,
+      status: types.Status.sending,
+    );
+
     setState(() {
-      loadingMessage = types.TextMessage(
-        author: types.User(id: _user.id),
-        createdAt: textMessage.createdAt.millisecondsSinceEpoch,
-        id: textMessage.id,
-        text: textMessage.text,
-      );
+      messages.insert(0, sendingMessage);
     });
 
-    await locator.get<ConversationRepoImpl>().sendMessage(textMessage);
+    final response = await locator.get<ConversationRepoImpl>().sendMessage(textMessage);
+    response.fold((l) => logger.e(l), (r) {
+      messages.remove(sendingMessage);
 
-    setState(() {
-      loadingMessage = null;
+      messages.insert(0, r.$1.toTypeMessage());
+      messages.insert(0, r.$2.toTypeMessage());
+
+      setState(() {});
     });
   }
 }
