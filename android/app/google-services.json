@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317585237847",
+    "project_id": "flutter-firebase-festival",
+    "storage_bucket": "flutter-firebase-festival.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317585237847:android:b661db933dae1b920f4012",
+        "android_client_info": {
+          "package_name": "com.yeasin50.echo_task_pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317585237847-pqdr4cn9operr2e668r2acskehavv9c4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgStZ5DTZapHguQH0qBeVVtRn-YyUqAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317585237847-pqdr4cn9operr2e668r2acskehavv9c4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
