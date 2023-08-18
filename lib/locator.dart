@@ -4,7 +4,11 @@ import 'package:get_it/get_it.dart';
 
 import 'features/chat/data/datasources/chatbot_palm_api.dart';
 import 'features/chat/data/repositories/conversation_repo_impl.dart';
+import 'features/text_summarize/data/datasources/summarize_text_with_palm.dart';
 import 'firebase_options.dart';
+
+export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:f3/features/text_summarize/data/datasources/summarize_text_with_palm.dart';
 
 final locator = GetIt.I;
 Future<void> setup() async {
@@ -13,4 +17,5 @@ Future<void> setup() async {
 
   locator.registerLazySingleton(() => ChatBotPaLM());
   locator.registerLazySingleton(() => ConversationRepoImpl());
+  locator.registerLazySingleton(() => SummarizeTextWithPalmDataSource());
 }
