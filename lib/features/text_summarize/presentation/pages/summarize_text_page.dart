@@ -39,7 +39,7 @@ Proper maintenance is the key to making spider plants grow faster in water. It w
     });
     final result = await locator.get<SummarizeTextWithPalmDataSource>().summarizeText(_textEditingController.text);
 
-    logger.d(result);
+    // logger.d(result);
     isSummarizing = false;
     summarizedText = result;
     setState(() {});
