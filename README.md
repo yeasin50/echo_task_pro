@@ -2,7 +2,11 @@
 
 A new Flutter project.
 
-##Planing 
+## Planing
 
-- [ ] Ai todo app 
-- [ ] chat 
+- [ ] Ai todo app
+- [x] chatbot
+- [x] summarize long text
+  - [x] type to summarization
+  - [ ] pick file and parse text
+  - [ ] <s>text to speech</s>
