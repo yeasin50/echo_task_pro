@@ -51,7 +51,7 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Echo Task Pro'),
+        title: const Text("Chat"),
       ),
       body: fcui.Chat(
         messages: [

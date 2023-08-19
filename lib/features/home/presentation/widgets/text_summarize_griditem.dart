@@ -21,9 +21,7 @@ class TextSummarizeGridItem extends StatelessWidget {
             ),
           );
         },
-        child: Icon(
-          Icons.summarize_rounded,
-        ),
+        child: const Icon(Icons.summarize_rounded),
       ),
     );
   }

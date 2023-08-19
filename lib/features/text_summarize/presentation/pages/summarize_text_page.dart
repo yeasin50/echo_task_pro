@@ -1,9 +1,9 @@
-import 'package:f3/features/text_summarize/presentation/widgets/text_choose_option.dart';
-import 'package:f3/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:my_utils/my_utils.dart';
 
+import '../../../../locator.dart';
 import '../../data/datasources/temp_data.dart';
+import '../widgets/summarize_text_preview.dart';
+import '../widgets/text_choose_option.dart';
 
 class SummarizeTextPage extends StatefulWidget {
   const SummarizeTextPage({super.key});
@@ -13,13 +13,15 @@ class SummarizeTextPage extends StatefulWidget {
 }
 
 class _SummarizeTextPageState extends State<SummarizeTextPage> {
-  late final TextEditingController _textEditingController = TextEditingController.fromValue(TextEditingValue(text: tempLongText));
+  late final TextEditingController _textEditingController = TextEditingController();
 
   bool isSummarizing = false;
   String? summarizedText;
 
   void summarizeText() async {
     FocusScope.of(context).unfocus();
+
+    if (_textEditingController.text.isEmpty) return;
     setState(() {
       isSummarizing = true;
     });
@@ -39,6 +41,11 @@ class _SummarizeTextPageState extends State<SummarizeTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    const labelTextStyle = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: Colors.grey,
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -46,11 +53,19 @@ class _SummarizeTextPageState extends State<SummarizeTextPage> {
         centerTitle: true,
       ),
       bottomNavigationBar: Padding(
-        padding: MediaQuery.of(context).viewInsets,
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 8,
+          right: 8,
+        ),
         child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 50)),
+          style: ElevatedButton.styleFrom(
+            // minimumSize: const Size(double.infinity, 50),
+            backgroundColor: _textEditingController.text.isEmpty ? Colors.grey : Colors.blue,
+            foregroundColor: _textEditingController.text.isEmpty ? Colors.black : Colors.white,
+          ),
           icon: isSummarizing ? const CircularProgressIndicator.adaptive() : const Icon(Icons.summarize),
-          label: Text(summarizedText == null ? "Summarize" : "Clear"),
+          label: Text(summarizedText == null ? "Summarize" : "Reset"),
           onPressed: summarizedText == null ? summarizeText : clearText,
         ),
       ),
@@ -58,31 +73,30 @@ class _SummarizeTextPageState extends State<SummarizeTextPage> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            const Text("Input Text"),
-            const SizedBox(
-              height: 20,
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text("Input Section", style: labelTextStyle),
             ),
+            const SizedBox(height: 8),
             TextField(
               maxLines: 10,
               minLines: 4,
               controller: _textEditingController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: "your long text here",
+                hintText: "Enter your text here OR open a text file",
               ),
             ),
             TextGetterOption(
+              key: const ValueKey("text_getter_option"),
+              textEditingController: _textEditingController,
               onTextGet: (text) {
                 _textEditingController.text = text;
-                // summarizeText();
+                summarizedText = null;
+                setState(() {});
               },
             ),
-            if (summarizedText != null) ...[
-              const Text("Output Text"),
-              const SizedBox(height: 20),
-              Text(summarizedText!),
-              const SizedBox(height: 20),
-            ],
+            if (summarizedText != null) SummarizeTextView(text: summarizedText!)
           ],
         ),
       ),
