@@ -8,5 +8,6 @@ A new Flutter project.
 - [x] chatbot
 - [x] summarize long text
   - [x] type to summarization
-  - [ ] pick file and parse text
+  - [x] pick file and parse text
   - [ ] <s>text to speech</s>
+- [ ] Ripple route
