@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'features/home/presentation/pages/home_page.dart';
 
-void main(List<String> args) {
-  runApp(const ChatBotApp());
-}
-
-class ChatBotApp extends MaterialApp {
-  const ChatBotApp({super.key});
+class AiAssistance extends MaterialApp {
+  const AiAssistance({super.key});
 
   @override
   Widget? get home => const HomePage();

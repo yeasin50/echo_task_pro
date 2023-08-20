@@ -44,7 +44,7 @@ class OnLoadedView extends StatelessWidget {
                             final route = RippleRoute(
                               center: center,
                               page: const ChatPage(),
-                              duration: const Duration(seconds: 1),
+                              duration: const Duration(milliseconds: 600),
                               // popPosition: FractionalOffset.topLeft,
                             );
                             logger.i("center: $center");
@@ -65,7 +65,7 @@ class OnLoadedView extends StatelessWidget {
                             final route = RippleRoute(
                               center: center,
                               page: const SummarizeTextPage(),
-                              duration: const Duration(seconds: 1),
+                              duration: const Duration(milliseconds: 600),
                             );
                             logger.i("center: $center");
                             Navigator.of(context).push(route);

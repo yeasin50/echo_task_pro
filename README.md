@@ -6,9 +6,10 @@ A new Flutter project.
 
 - [ ] Ai todo app
 - [x] chatbot
+  - [ ] add bloc 
 - [x] summarize long text
   - [x] type to summarization
   - [x] pick file and parse text
   - [ ] <s>text to speech</s>
-- [ ] Ripple route
+- [x] Ripple route
 - [ ] improve homepage
