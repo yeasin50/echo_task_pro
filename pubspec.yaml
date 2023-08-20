@@ -8,7 +8,12 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.8.4
+  custom_page_route:
+    git:
+      url: https://github.com/yeasin50/custom_page_route.git
+      ref: master
   equatable: ^2.0.5
+  file_picker: ^5.3.3
   firebase_auth: ^4.7.3
   firebase_core: ^2.15.0
   flutter:
