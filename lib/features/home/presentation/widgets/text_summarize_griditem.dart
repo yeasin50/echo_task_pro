@@ -11,14 +11,20 @@ class TextSummarizeGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final shape = CustomButtonShape(alignment: Alignment.centerLeft);
     return Material(
-      color: Colors.blue[100],
       shape: shape,
       child: GestureDetector(
         child: InkWell(
-          customBorder: shape,
-          onTap: onTap,
-          child: const Icon(Icons.summarize_rounded),
-        ),
+            customBorder: shape,
+            onTap: onTap,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.summarize_rounded),
+                SizedBox(height: 8),
+                Text("Summarize"),
+              ],
+            )),
       ),
     );
   }

@@ -9,14 +9,21 @@ class ChatBotGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shape = CustomButtonShape(alignment: Alignment.centerRight);
-    //duplicates,merge later
+
     return Material(
-      color: Colors.blue[100],
       shape: shape,
       child: InkWell(
         onTap: onTap,
         customBorder: shape,
-        child: const Icon(Icons.chat_bubble_outline_rounded),
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.chat_bubble_outline_rounded),
+            SizedBox(height: 8),
+            Text("Chat Bot"),
+          ],
+        ),
       ),
     );
   }

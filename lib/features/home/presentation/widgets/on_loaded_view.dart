@@ -44,7 +44,7 @@ class OnLoadedView extends StatelessWidget {
                             final route = RippleRoute(
                               center: center,
                               page: const ChatPage(),
-                              duration: const Duration(seconds: 5),
+                              duration: const Duration(seconds: 1),
                               // popPosition: FractionalOffset.topLeft,
                             );
                             logger.i("center: $center");
@@ -59,13 +59,13 @@ class OnLoadedView extends StatelessWidget {
                           onTap: () {
                             final center = constraints
                                 .copyWith(
-                                  maxHeight: height - kToolbarHeight, //cheating 😅, to have the AppBar
+                                  maxHeight: height + kToolbarHeight, //cheating 😅, to have the AppBar
                                 )
                                 .fractionalOffset(tapPosition);
                             final route = RippleRoute(
                               center: center,
                               page: const SummarizeTextPage(),
-                              duration: const Duration(seconds: 5),
+                              duration: const Duration(seconds: 1),
                             );
                             logger.i("center: $center");
                             Navigator.of(context).push(route);
