@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../../../text_summarize/presentation/pages/summarize_text_page.dart';
+import 'button_shape.dart';
 
 class TextSummarizeGridItem extends StatelessWidget {
-  const TextSummarizeGridItem({super.key});
+  const TextSummarizeGridItem({super.key, this.onTap});
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(20));
+    final shape = CustomButtonShape(alignment: Alignment.centerLeft);
     return Material(
       color: Colors.blue[100],
       shape: shape,
-      child: InkWell(
-        customBorder: shape,
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SummarizeTextPage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.summarize_rounded),
+      child: GestureDetector(
+        child: InkWell(
+          customBorder: shape,
+          onTap: onTap,
+          child: const Icon(Icons.summarize_rounded),
+        ),
       ),
     );
   }

@@ -1,32 +1,22 @@
+import 'package:f3/features/home/presentation/widgets/button_shape.dart';
 import 'package:flutter/material.dart';
 
-import '../../../chat/presentation/pages/chat_page.dart';
-
 class ChatBotGridItem extends StatelessWidget {
-  const ChatBotGridItem({super.key});
+  const ChatBotGridItem({super.key, this.onTap});
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final shape = CustomButtonShape(alignment: Alignment.centerRight);
+    //duplicates,merge later
     return Material(
       color: Colors.blue[100],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: shape,
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChatPage(),
-            ),
-          );
-        },
-        customBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Icon(
-          Icons.chat_bubble_outline_rounded,
-        ),
+        onTap: onTap,
+        customBorder: shape,
+        child: const Icon(Icons.chat_bubble_outline_rounded),
       ),
     );
   }
