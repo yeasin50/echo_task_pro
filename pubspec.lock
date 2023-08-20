@@ -97,6 +97,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  custom_page_route:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: a7833a520cb6cab3c1d736325b484bec26dd7eb2
+      url: "https://github.com/yeasin50/custom_page_route.git"
+    source: git
+    version: "0.0.1"
   diffutil_dart:
     dependency: transitive
     description:

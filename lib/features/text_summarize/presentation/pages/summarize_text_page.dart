@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../locator.dart';
-import '../../data/datasources/temp_data.dart';
 import '../widgets/summarize_text_preview.dart';
 import '../widgets/text_choose_option.dart';
 

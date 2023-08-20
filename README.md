@@ -11,3 +11,4 @@ A new Flutter project.
   - [x] pick file and parse text
   - [ ] <s>text to speech</s>
 - [ ] Ripple route
+- [ ] improve homepage
